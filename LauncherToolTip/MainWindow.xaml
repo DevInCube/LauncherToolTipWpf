@@ -18,18 +18,27 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
             </Style.Setters>
         </Style>
-        <Style x:Key="Launcher" TargetType="{x:Type Label}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Label}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter VerticalAlignment="Center"/>
-                            <local:ProcessLauncher/>
-                        </StackPanel>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+<Style x:Key="Launcher" TargetType="{x:Type Label}">
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Label}">
+                <StackPanel Orientation="Horizontal">
+                    <ContentPresenter VerticalAlignment="Center"/>
+                    <local:ProcessLauncherView 
+                        Path="{Binding RelativeSource={
+                                  RelativeSource FindAncestor,
+                                  AncestorType=Label}, 
+                                  Path=(local:LauncherBehavior.Path)}"
+                        ToolTipText="{Binding RelativeSource={
+                                  RelativeSource FindAncestor,
+                                  AncestorType=Label}, 
+                                  Path=(local:LauncherBehavior.ToolTipText)}"
+                        />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
     </Window.Resources>
     <Grid>
         <StackPanel>
@@ -44,6 +53,8 @@
                 />
             <Label Content="With style" Margin="10, 0" HorizontalAlignment="Center" 
                    Style="{DynamicResource Launcher}"
+                   local:LauncherBehavior.Path="{Binding LaunchPath}"
+                   local:LauncherBehavior.ToolTipText="{Binding LaunchTooltip}"
                    />
             <Border Background="AliceBlue">
                 <Label Height="50"  Content="With style (tall)" Margin="10, 0" HorizontalAlignment="Center" 
